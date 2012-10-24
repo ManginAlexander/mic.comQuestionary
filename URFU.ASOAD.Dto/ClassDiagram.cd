@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="URFU.ASOAD.Dto.Questionary">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>oIAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Questionary.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URFU.ASOAD.Dto.Contact">
+    <Position X="3.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAACAAAAIAAAAAA=</HashCode>
+      <FileName>Contact.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URFU.ASOAD.Dto.SkillTheme">
+    <Position X="8" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>SkillTheme.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URFU.ASOAD.Dto.Education">
+    <Position X="5.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAEAAAAAAAAAAAAAACIAA=</HashCode>
+      <FileName>Education.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URFU.ASOAD.Dto.FullName">
+    <Position X="2" Y="2.75" Width="1.5" />
+    <Members>
+      <Method Name="Equals" Hidden="true" />
+      <Method Name="GetHashCode" Hidden="true" />
+      <Field Name="NAME_FORMAT" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAEgAAQAACAAAAAAIAAAAAAAAAAAAg=</HashCode>
+      <FileName>FullName.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URFU.ASOAD.Dto.Person">
+    <Position X="3.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAACAAAAAAAAAAIAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Person.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URFU.ASOAD.Dto.Skill">
+    <Position X="8" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQgAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Skill.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="URFU.ASOAD.Dto.SkillArea">
+    <Position X="9.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACEAAAQAAAAAAAAAACAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>SkillArea.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
