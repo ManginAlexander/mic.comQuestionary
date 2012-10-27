@@ -1,4 +1,8 @@
-﻿using URFU.ASOAD.Core.Factories;
+﻿using System;
+using System.Globalization;
+
+using URFU.ASOAD.Core;
+using URFU.ASOAD.Core.Factories;
 using URFU.ASOAD.Dto;
 
 namespace URFU.ASOAD.Tests
@@ -7,17 +11,15 @@ namespace URFU.ASOAD.Tests
     {
         public static Questionary CreateQuestionary()
         {
-            Questionary questionary = new QuestionaryFactory().Create();
-            DataGenerator dataGenerator = new DataGenerator { CountElementsInArray = 3};
-            dataGenerator.FillObject(questionary);
-            foreach (SkillTheme skillTheme in questionary.SkillThemes)
-            {
-                for (int index = 0; index < 3; index++)
-                {
-                    skillTheme.Skills.Add((Skill)dataGenerator.Generate(typeof(Skill)));
-                }
-            }
+            Questionary questionary = QuestionaryFactory.Create();
+            new DataGenerator().FillObject(questionary);
+            questionary.Id = null; //идентификатор при сохранении
             return questionary;
+        }
+
+        public static DateTime ToDate(string stringValue)
+        {
+            return DateTime.ParseExact(stringValue, DateTimeUtils.DATETIME_WITH_MS_FORMAT, CultureInfo.InvariantCulture);
         }
     }
 }

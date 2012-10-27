@@ -15,7 +15,12 @@ namespace URFU.ASOAD.Db
     /// </summary>
     public class QuestionaryRepository : IQuestionaryRepository
     {
+        /// <summary>
+        /// Имя файла репозитория
+        /// </summary>
         private const string REPOSITORY_FILE_NAME = "data.repository";
+
+        private const string UNIQUE_ID_FORMAT = "{0} {1}";
 
         private static readonly Lazy<QuestionaryRepository> lazyInstance = new Lazy<QuestionaryRepository>(Create, LazyThreadSafetyMode.ExecutionAndPublication);
 
@@ -33,13 +38,13 @@ namespace URFU.ASOAD.Db
 
         private volatile SortedDictionary<string, Questionary> repository = new SortedDictionary<string, Questionary>();
 
-        private volatile bool isLoaded = false;
+        private volatile bool isLoaded;
 
         /// <summary>
         /// Загрузить все анкеты
         /// </summary>
         /// <returns>набор анкет</returns>
-        public List<Questionary> ReadAll()
+        public List<Questionary> AllQuestionaries()
         {
             Init();
             return repository.Values.ToList();
@@ -51,11 +56,50 @@ namespace URFU.ASOAD.Db
         /// <param name="questionary">анкета</param>
         public void Add(Questionary questionary)
         {
+            Init();
             lock (this)
             {
-                repository.Add(questionary.Person.FullName.ToString(), questionary);
+                questionary.Id = GetUniqueId(questionary.Person);
+                repository.Add(questionary.Id, questionary);
                 Save(ObjectUtils.Serialize(repository));
             }
+        }
+
+        /// <summary>
+        /// Изменить анкету в репозитории
+        /// </summary>
+        /// <param name="questionary">анкета</param>
+        public void Change(Questionary questionary)
+        {
+            Init();
+            lock (this)
+            {
+                if (string.IsNullOrWhiteSpace(questionary.Id) || !repository.ContainsKey(questionary.Id))
+                {
+                    throw new DaoException(ErrorCode.ObjectNotFound, typeof(Questionary).Name, questionary.Id);
+                }
+                string id = GetUniqueId(questionary.Person);
+                if (questionary.Id != id) //изменилась ключевая информация
+                {
+                    repository.Remove(questionary.Id);
+                    repository.Add(questionary.Id = id, questionary);
+                }
+                else
+                {
+                    repository[id] = questionary;
+                }
+                Save(ObjectUtils.Serialize(repository));
+            }
+        }
+
+        /// <summary>
+        /// Псевдоуникальный идентификатор сохранённого в репозитории объекта
+        /// </summary>
+        /// <param name="person">анкетируемый</param>
+        /// <returns>идентификатор</returns>
+        private string GetUniqueId(Person person)
+        {
+            return string.Format(UNIQUE_ID_FORMAT, person.FullName, person.Birthday.ToFormatString());
         }
 
         /// <summary>

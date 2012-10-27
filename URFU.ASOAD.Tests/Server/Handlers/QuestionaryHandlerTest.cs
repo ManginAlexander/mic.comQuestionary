@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+
+using Moq;
 
 using NUnit.Framework;
 
+using URFU.ASOAD.Core;
 using URFU.ASOAD.Core.Exceptions;
 using URFU.ASOAD.Db.Dao;
 using URFU.ASOAD.Dto;
@@ -11,56 +15,69 @@ using URFU.ASOAD.Server.Handlers;
 namespace URFU.ASOAD.Tests.Server.Handlers
 {
     [TestFixture]
-    public class QuestionaryHandlerTest
+    public class QuestionaryHandlerTest : BaseQuestionaryAccessTest
     {
-        private class QuestionaryDaoTest : IQuestionaryDao //todo переделать на Moq
+        private IQuestionaryDao dao;
+
+        private IQuestionaryHandler handler;
+
+        public override void SetUp()
         {
-            public QuestionaryDaoTest()
-            {
-                AddAction = questionary => Questionaries.Add(questionary);
-            }
-
-            public List<Questionary> Questionaries = new List<Questionary>();
-
-            public List<Questionary> LoadAllQuestionaries()
-            {
-                return Questionaries;
-            }
-
-            public Action<Questionary> AddAction { get; set; }
-
-            public void AddQuestionary(Questionary questionary)
-            {
-                AddAction(questionary);
-            }
-        }
-
-        private QuestionaryDaoTest dao;
-
-        private QuestionaryHandler handler;
-
-        [SetUp]
-        public void SetUp()
-        {
-            dao = new QuestionaryDaoTest();
+            base.SetUp();
+            dao = Mock.Of<IQuestionaryDao>();
+            Mock<IQuestionaryDao> mock = Mock.Get(dao);
+            mock.Setup(mockDao => mockDao.AllQuestionaries()).Returns(ReadAllQuestionaries);
+            mock.Setup(mockDao => mockDao.Add(It.IsAny<Questionary>())).Callback<Questionary>(AddQuestionary);
+            mock.Setup(mockDao => mockDao.Change(It.IsAny<Questionary>())).Callback<Questionary>(ChangeQuestionary);
             handler = new QuestionaryHandler { Dao = dao };
         }
 
         [Test]
-        public void AddQuestionaryTest()
+        public void TestAddQuestionary()
         {
-            Assert.AreEqual(0, dao.Questionaries.Count);
             Questionary questionary = TestObjectsFactory.CreateQuestionary();
-            handler.AddQuestionary(questionary);
-            Assert.AreEqual(1, dao.Questionaries.Count);
-            Assert.IsTrue(ReferenceEquals(questionary, dao.Questionaries[0]));
+            handler.Add(questionary);
+            Assert.AreEqual(1, TestQuestionaries.Count);
+            Assert.IsTrue(ReferenceEquals(questionary, TestQuestionaries[0]));
         }
 
         [Test]
-        public void HandleExceptionTest()
+        public void TestHandleException()
         {
-            dao.AddAction = questionary => { throw new NotImplementedException(); };
-            Assert.Catch(typeof(HandleException), () => handler.AddQuestionary(null));
+            Mock.Get(dao).Setup(mockDao => mockDao.Add(It.IsAny<Questionary>())).Throws<NotImplementedException>();
+            Assert.Catch(typeof(HandleException), () => handler.Add(TestObjectsFactory.CreateQuestionary()));
+        }
+
+        [Test]
+        public void TestAllQuestionaries()
+        {
+            Assert.IsEmpty(handler.AllQuestionaries());
+            handler.Add(TestObjectsFactory.CreateQuestionary());
+            handler.Add(TestObjectsFactory.CreateQuestionary());
+            List<Questionary> allQuestionaries = handler.AllQuestionaries();
+            Assert.IsNotEmpty(allQuestionaries);
+            Assert.AreEqual(2, allQuestionaries.Count);
+        }
+
+        [Test]
+        public void TestChangeQuestionary()
+        {
+            Questionary questionary = TestObjectsFactory.CreateQuestionary();
+            handler.Add(questionary);
+            Assert.AreEqual(1, TestQuestionaries.Count);
+            questionary.AdditionalInfo = Guid.NewGuid().ToString();
+            handler.Change(questionary);
+            Assert.AreEqual(1, TestQuestionaries.Count);
+            Assert.AreEqual(questionary.AdditionalInfo, TestQuestionaries.First().AdditionalInfo);
+        }
+
+        [Test]
+        public void TestAddInvalidQuestionary()
+        {
+            Questionary questionary = TestObjectsFactory.CreateQuestionary();
+            questionary.Person.FirstName = string.Empty;
+            ValidationException validationException = Assert.Throws<ValidationException>(() => handler.Add(questionary));
+            Assert.AreEqual(ErrorCode.ValidationError, validationException.ErrorCode);
         }
     }
 }

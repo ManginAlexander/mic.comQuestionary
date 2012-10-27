@@ -40,8 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DateTimeUtils.cs" />
     <Compile Include="ErrorCode.cs" />
     <Compile Include="Exceptions\ASOADException.cs" />
+    <Compile Include="Exceptions\ValidationException.cs" />
+    <Compile Include="Exceptions\DaoException.cs" />
     <Compile Include="Exceptions\HandleException.cs" />
     <Compile Include="Exceptions\RunTimeException.cs" />
     <Compile Include="Exceptions\InternalException.cs" />

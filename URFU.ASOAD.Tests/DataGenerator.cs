@@ -105,22 +105,22 @@ namespace URFU.ASOAD.Tests
             }
         }
 
-        private Dictionary<Type, IGeneratePropertyAction> propertyActions = null;
+        private static readonly Dictionary<Type, IGeneratePropertyAction> propertyActions = new Dictionary<Type, IGeneratePropertyAction>
+        {
+            { typeof(byte), new GenerateBytePropertyAction() }, 
+            { typeof(byte[]), new GenerateByteArrayPropertyAction() }, 
+            { typeof(bool), new GenerateBoolPropertyAction() }, 
+            { typeof(DateTime), new GenerateDateTimePropertyAction() }, 
+            { typeof(string), new GenerateStringPropertyAction() },
+            { typeof(int), new GenerateIntegerPropertyAction() }, 
+            { typeof(uint), new GenerateUIntPropertyAction() }, 
+            { typeof(ushort), new GenerateUShortPropertyAction() }, 
+            { typeof(float), new GenerateFloatPropertyAction() }, 
+            { typeof(double), new GenerateDoublePropertyAction() }
+        };
 
         public DataGenerator()
         {
-            propertyActions = new Dictionary<Type, IGeneratePropertyAction>();
-            propertyActions.Add(typeof(byte), new GenerateBytePropertyAction());
-            propertyActions.Add(typeof(byte[]), new GenerateByteArrayPropertyAction());
-            propertyActions.Add(typeof(bool), new GenerateBoolPropertyAction());
-            propertyActions.Add(typeof(DateTime), new GenerateDateTimePropertyAction());
-            propertyActions.Add(typeof(string), new GenerateStringPropertyAction());
-            propertyActions.Add(typeof(int), new GenerateIntegerPropertyAction());
-            propertyActions.Add(typeof(uint), new GenerateUIntPropertyAction());
-            propertyActions.Add(typeof(ushort), new GenerateUShortPropertyAction());
-            propertyActions.Add(typeof(float), new GenerateFloatPropertyAction());
-            propertyActions.Add(typeof(double), new GenerateDoublePropertyAction());
-
             BeginTime = DateTime.Now;
         }
 
@@ -172,7 +172,10 @@ namespace URFU.ASOAD.Tests
         private Type GetElementTypeFromArrayType(Type type)
         {
             string name = type.FullName;
-            name = name.Substring(0, name.LastIndexOf("[]"));
+            if (name != null)
+            {
+                name = name.Substring(0, name.LastIndexOf("[]"));
+            }
             return Assembly.GetAssembly(type).GetType(name);
         }
 

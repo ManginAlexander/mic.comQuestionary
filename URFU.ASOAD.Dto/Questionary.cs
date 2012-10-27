@@ -7,12 +7,12 @@ namespace URFU.ASOAD.Dto
     /// Анкета
     /// </summary>
     [Serializable]
-    public class Questionary
+    public partial class Questionary
     {
         /// <summary>
         /// Название курса
         /// </summary>
-        public string Course { get; set; }
+        public string Course { get; set; } //todo курсов может быть много
 
         /// <summary>
         /// Информация о человеке

@@ -15,7 +15,7 @@ namespace URFU.ASOAD.Core.Exceptions
         /// <summary>
         /// Код ошибки
         /// </summary>
-        public ErrorCode ErrorCode;
+        public readonly ErrorCode ErrorCode;
 
         /// <summary>
         /// Исключение с текстом сообщения об ошибке и аргументами

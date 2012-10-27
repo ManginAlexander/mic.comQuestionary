@@ -14,11 +14,11 @@
         /// </summary>
         ErrorMessageNotFound,
         /// <summary>
-        /// Невозможно загрузить репозиторий "{}" по причине: {1}
+        /// Невозможно загрузить хранилище "{0}" по причине: {1}
         /// </summary>
         CanNotLoadRepository,
         /// <summary>
-        /// Невозможно сохранить репозиторий "{}" по причине: {1}
+        /// Невозможно сохранить хранилище "{0}" по причине: {1}
         /// </summary>
         CanNotSaveRepository,
         /// <summary>
@@ -32,6 +32,22 @@
         /// <summary>
         /// В процессе обработки запроса {0} перехвачено исключение: {1}
         /// </summary>
-        HandleException
+        HandleException,
+        /// <summary>
+        /// Ошибка при работе с хранилищем данных: {0}
+        /// </summary>
+        DaoException,
+        /// <summary>
+        /// Объект {0} с идентификатором '{1}' не найден в хранилище
+        /// </summary>
+        ObjectNotFound,
+        /// <summary>
+        /// Невозможно изменить объект {0}, который ещё не был сохранён в хранилище
+        /// </summary>
+        CanNotChangeUnsavedObject,
+        /// <summary>
+        /// При проверке правильности заполнения анкеты обнаружены ошибки: {0}
+        /// </summary>
+        ValidationError
     }
 }

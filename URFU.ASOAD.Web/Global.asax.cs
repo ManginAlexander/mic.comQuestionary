@@ -1,17 +1,11 @@
 ﻿using System;
 
-using URFU.ASOAD.Server;
-
 namespace URFU.ASOAD.Web
 {
     public class Global : System.Web.HttpApplication
     {
-
-        private RunTimeManager runTimeManager; //todo убрать, когда будет реализовано на WCF
-
         void Application_Start(object sender, EventArgs e)
         {
-            runTimeManager = RunTimeManager.Instance;
             // Code that runs on application startup
         }
 
@@ -41,6 +35,7 @@ namespace URFU.ASOAD.Web
             // or SQLServer, the event is not raised.
 
         }
+
 
     }
 }

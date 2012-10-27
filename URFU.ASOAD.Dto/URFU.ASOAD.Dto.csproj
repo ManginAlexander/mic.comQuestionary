@@ -42,7 +42,8 @@
   <ItemGroup>
     <Compile Include="Contact.cs" />
     <Compile Include="Education.cs" />
-    <Compile Include="FullName.cs" />
+    <Compile Include="IQuestionaryAccess.cs" />
+    <Compile Include="partial\Questionary.cs" />
     <Compile Include="Questionary.cs" />
     <Compile Include="Resolvers\SkillAreaResolver.cs" />
     <Compile Include="Skill.cs" />
@@ -54,6 +55,7 @@
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

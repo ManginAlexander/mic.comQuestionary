@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.1\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -43,17 +46,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Exceptions\TestErrorCodes.cs" />
-    <Compile Include="Core\TestObjectUtils.cs" />
+    <Compile Include="Core\DateTimeUtilsTest.cs" />
+    <Compile Include="Core\Exceptions\ErrorCodesTest.cs" />
+    <Compile Include="Core\ObjectUtilsTest.cs" />
     <Compile Include="DataGenerator.cs" />
-    <Compile Include="Db\Dao\TestQuestionaryDao.cs" />
-    <Compile Include="Db\TestQuestionaryRepository.cs" />
-    <Compile Include="Dto\Resolvers\TestSkillAreaResolver.cs" />
+    <Compile Include="Db\Dao\QuestionaryDaoTest.cs" />
+    <Compile Include="Db\QuestionaryRepositoryTest.cs" />
+    <Compile Include="Dto\Resolvers\SkillAreaResolverTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BaseQuestionaryAccessTest.cs" />
     <Compile Include="Server\Handlers\QuestionaryHandlerTest.cs" />
     <Compile Include="TestObjectsFactory.cs" />
+    <Compile Include="TestUtils.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

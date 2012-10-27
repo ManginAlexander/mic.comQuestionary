@@ -61,7 +61,16 @@ namespace URFU.ASOAD.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Невозможно загрузить репозиторий &quot;{}&quot; по причине: {1}.
+        ///   Looks up a localized string similar to Невозможно изменить объект {0}, который ещё не был сохранён в хранилище.
+        /// </summary>
+        public static string CanNotChangeUnsavedObject {
+            get {
+                return ResourceManager.GetString("CanNotChangeUnsavedObject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Невозможно загрузить хранилище &quot;{0}&quot; по причине: {1}.
         /// </summary>
         public static string CanNotLoadRepository {
             get {
@@ -70,11 +79,20 @@ namespace URFU.ASOAD.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Невозможно сохранить репозиторий &quot;{}&quot; по причине: {1}.
+        ///   Looks up a localized string similar to Невозможно сохранить хранилище &quot;{0}&quot; по причине: {1}.
         /// </summary>
         public static string CanNotSaveRepository {
             get {
                 return ResourceManager.GetString("CanNotSaveRepository", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ошибка при работе с хранилищем данных: {0}.
+        /// </summary>
+        public static string DaoException {
+            get {
+                return ResourceManager.GetString("DaoException", resourceCulture);
             }
         }
         
@@ -115,11 +133,29 @@ namespace URFU.ASOAD.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Объект {0} с идентификатором &apos;{1}&apos; не найден в хранилище.
+        /// </summary>
+        public static string ObjectNotFound {
+            get {
+                return ResourceManager.GetString("ObjectNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ошибка при сериализации объекта типа {0}: {1}.
         /// </summary>
         public static string SerializeException {
             get {
                 return ResourceManager.GetString("SerializeException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to При проверке правильности заполнения анкеты обнаружены ошибки: {0}.
+        /// </summary>
+        public static string ValidationError {
+            get {
+                return ResourceManager.GetString("ValidationError", resourceCulture);
             }
         }
     }

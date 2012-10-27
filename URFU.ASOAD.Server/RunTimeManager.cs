@@ -31,6 +31,6 @@ namespace URFU.ASOAD.Server
 
         private RunTimeManager() { }
 
-        public QuestionaryHandler QuestionaryHandler { get; private set; }
+        public IQuestionaryHandler QuestionaryHandler { get; private set; }
     }
 }

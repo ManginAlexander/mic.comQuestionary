@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using URFU.ASOAD.Core;
+using URFU.ASOAD.Core.Exceptions;
 using URFU.ASOAD.Dto;
 
 namespace URFU.ASOAD.Db.Dao
@@ -16,18 +18,50 @@ namespace URFU.ASOAD.Db.Dao
         /// Загрузить все имеющиеся анкеты
         /// </summary>
         /// <returns>список анкет</returns>
-        public List<Questionary> LoadAllQuestionaries()
+        public List<Questionary> AllQuestionaries()
         {
-            return Repository().ReadAll();
+            List<Questionary> result = null;
+            Handle(repository => result = repository.AllQuestionaries());
+            return result;
         }
 
         /// <summary>
         /// Добавить анкету
         /// </summary>
         /// <param name="questionary">анкета</param>
-        public void AddQuestionary(Questionary questionary)
+        public void Add(Questionary questionary)
         {
-            Repository().Add(questionary);
+            //todo проверка уникальности анкеты
+            Handle(repository => repository.Add(questionary));
+        }
+
+        /// <summary>
+        /// Изменить анкету
+        /// </summary>
+        /// <param name="questionary">анкета</param>
+        public void Change(Questionary questionary)
+        {
+            if (string.IsNullOrWhiteSpace(questionary.Id))
+            {
+                throw new DaoException(ErrorCode.CanNotChangeUnsavedObject, typeof(Questionary).Name);
+            }
+            Handle(repository => repository.Change(questionary));
+        }
+
+        private void Handle(Action<IQuestionaryAccess> daoAction)
+        {
+            try
+            {
+                daoAction(Repository());
+            }
+            catch (ASOADException)
+            {
+                throw;
+            }
+            catch (Exception exception)
+            {
+                throw new DaoException(ErrorCode.DaoException, exception);
+            }
         }
     }
 }

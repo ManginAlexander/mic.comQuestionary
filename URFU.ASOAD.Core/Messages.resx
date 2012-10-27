@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CanNotChangeUnsavedObject" xml:space="preserve">
+    <value>Невозможно изменить объект {0}, который ещё не был сохранён в хранилище</value>
+  </data>
   <data name="CanNotLoadRepository" xml:space="preserve">
-    <value>Невозможно загрузить репозиторий "{}" по причине: {1}</value>
+    <value>Невозможно загрузить хранилище "{0}" по причине: {1}</value>
   </data>
   <data name="CanNotSaveRepository" xml:space="preserve">
-    <value>Невозможно сохранить репозиторий "{}" по причине: {1}</value>
+    <value>Невозможно сохранить хранилище "{0}" по причине: {1}</value>
+  </data>
+  <data name="DaoException" xml:space="preserve">
+    <value>Ошибка при работе с хранилищем данных: {0}</value>
   </data>
   <data name="DeserializeException" xml:space="preserve">
     <value>Ошибка при десериализации объекта типа {0}: {1}</value>
@@ -135,7 +141,13 @@
   <data name="Message" xml:space="preserve">
     <value>{0}</value>
   </data>
+  <data name="ObjectNotFound" xml:space="preserve">
+    <value>Объект {0} с идентификатором '{1}' не найден в хранилище</value>
+  </data>
   <data name="SerializeException" xml:space="preserve">
     <value>Ошибка при сериализации объекта типа {0}: {1}</value>
+  </data>
+  <data name="ValidationError" xml:space="preserve">
+    <value>При проверке правильности заполнения анкеты обнаружены ошибки: {0}</value>
   </data>
 </root>
