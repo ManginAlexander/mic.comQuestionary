@@ -31,8 +31,15 @@ namespace URFU.ASOAD.Db.Dao
         /// <param name="questionary">анкета</param>
         public void Add(Questionary questionary)
         {
-            //todo проверка уникальности анкеты
-            Handle(repository => repository.Add(questionary));
+            Handle(repository =>
+            {
+                if (repository.Contains(questionary))
+                {
+                    throw new DaoException(ErrorCode.ObjectNotUnique, questionary.Person.ToString());
+                }
+                repository.Add(questionary);
+            }
+            );
         }
 
         /// <summary>
@@ -48,7 +55,7 @@ namespace URFU.ASOAD.Db.Dao
             Handle(repository => repository.Change(questionary));
         }
 
-        private void Handle(Action<IQuestionaryAccess> daoAction)
+        private void Handle(Action<IQuestionaryRepository> daoAction)
         {
             try
             {

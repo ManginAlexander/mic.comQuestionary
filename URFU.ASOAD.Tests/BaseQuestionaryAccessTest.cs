@@ -31,7 +31,12 @@ namespace URFU.ASOAD.Tests
         protected List<Questionary> ReadAllQuestionaries()
         {
             return TestQuestionaries;
-        } 
+        }
+
+        protected bool Contains(Questionary questionary)
+        {
+            return !string.IsNullOrEmpty(questionary.Id) && testQuestionaries.ContainsKey(questionary.Id);
+        }
 
         protected List<Questionary> TestQuestionaries {get { return testQuestionaries.Values.ToList(); }}
 

@@ -5,6 +5,7 @@ using Moq;
 
 using NUnit.Framework;
 
+using URFU.ASOAD.Core;
 using URFU.ASOAD.Core.Exceptions;
 using URFU.ASOAD.Db;
 using URFU.ASOAD.Db.Dao;
@@ -29,6 +30,7 @@ namespace URFU.ASOAD.Tests.Db.Dao
             mock.Setup(mockDao => mockDao.AllQuestionaries()).Returns(ReadAllQuestionaries);
             mock.Setup(mockRepo => mockRepo.Add(It.IsAny<Questionary>())).Callback<Questionary>(AddQuestionary);
             mock.Setup(mockRepo => mockRepo.Change(It.IsAny<Questionary>())).Callback<Questionary>(ChangeQuestionary);
+            mock.Setup(mockRepo => mockRepo.Contains(It.IsAny<Questionary>())).Returns<Questionary>(Contains);
             dao = new QuestionaryDao { Repository = () => repository };
         }
 
@@ -55,6 +57,15 @@ namespace URFU.ASOAD.Tests.Db.Dao
         {
             Questionary questionary = TestObjectsFactory.CreateQuestionary();
             Assert.Throws<DaoException>(() => dao.Change(questionary));
+        }
+
+        [Test]
+        public void TestUniqueConstraint()
+        {
+            Questionary questionary = TestObjectsFactory.CreateQuestionary();
+            dao.Add(questionary);
+            DaoException daoException = Assert.Throws<DaoException>(() => dao.Add(questionary));
+            Assert.AreEqual(ErrorCode.ObjectNotUnique, daoException.ErrorCode);
         }
     }
 }

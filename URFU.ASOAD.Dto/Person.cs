@@ -45,6 +45,12 @@ namespace URFU.ASOAD.Dto
         /// </summary>
         public Education Education { get; set; }
 
+        public Person()
+        {
+            Education = new Education();
+            Contact = new Contact();
+        }
+
         protected bool Equals(Person other)
         {
             return string.Equals(FullName, other.FullName) && Birthday.Equals(other.Birthday) && 

@@ -142,6 +142,15 @@ namespace URFU.ASOAD.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Анкета &quot;{0}&quot; уже существует в хранилище.
+        /// </summary>
+        public static string ObjectNotUnique {
+            get {
+                return ResourceManager.GetString("ObjectNotUnique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ошибка при сериализации объекта типа {0}: {1}.
         /// </summary>
         public static string SerializeException {

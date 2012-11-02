@@ -144,6 +144,9 @@
   <data name="ObjectNotFound" xml:space="preserve">
     <value>Объект {0} с идентификатором '{1}' не найден в хранилище</value>
   </data>
+  <data name="ObjectNotUnique" xml:space="preserve">
+    <value>Анкета "{0}" уже существует в хранилище</value>
+  </data>
   <data name="SerializeException" xml:space="preserve">
     <value>Ошибка при сериализации объекта типа {0}: {1}</value>
   </data>

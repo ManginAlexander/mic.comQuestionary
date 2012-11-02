@@ -28,7 +28,7 @@ namespace URFU.ASOAD.Web.Model
         /// <param name="questionary">анкета</param>
         public void Change(Questionary questionary)
         {
-            throw new System.NotImplementedException();
+            handler.Change(questionary);
         }
 
         /// <summary>

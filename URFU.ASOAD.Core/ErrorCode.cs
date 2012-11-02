@@ -48,6 +48,10 @@
         /// <summary>
         /// При проверке правильности заполнения анкеты обнаружены ошибки: {0}
         /// </summary>
-        ValidationError
+        ValidationError,
+        /// <summary>
+        /// Анкета "{0}" уже существует в хранилище
+        /// </summary>
+        ObjectNotUnique
     }
 }

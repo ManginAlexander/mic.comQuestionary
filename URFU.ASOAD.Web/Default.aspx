@@ -1,17 +1,28 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
-    CodeBehind="Default.aspx.cs" Inherits="URFU.ASOAD.Web.Default" Trace="false" %>
-
+    CodeBehind="Default.aspx.cs" Inherits="URFU.ASOAD.Web.Default" Trace="false" EnableEventValidation="true" %>
+    
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <h2>
-        Welcome to ASP.NET!
+        Новая анкета
     </h2>
     <p>
-        To learn more about ASP.NET visit <a href="http://www.asp.net" title="ASP.NET Website">www.asp.net</a>.
+        <asp:Label runat="server" ID="CourseLabel" AssociatedControlID="CourseTextBox" Text="Курс"
+            Font-Bold="true" />
+        <asp:TextBox ID="CourseTextBox" runat="server" Text='<%#Questionary.Course %>' />
     </p>
     <p>
-        You can also find <a href="http://go.microsoft.com/fwlink/?LinkID=152368&amp;clcid=0x409"
-            title="MSDN ASP.NET Docs">documentation on ASP.NET at MSDN</a>.
-        </p>
+        <asp:Label runat="server" ID="LastNameLabel" AssociatedControlID="LastNameTextBox"
+            Text="Фамилия" Font-Bold="true" />
+        <asp:TextBox ID="LastNameTextBox" runat="server" Text='<%#Questionary.Person.LastName %>' />
+        <asp:Label runat="server" ID="FirstNameLabel" AssociatedControlID="FirstNameTextBox"
+            Text="Имя" Font-Bold="true" />
+        <asp:TextBox ID="FirstNameTextBox" runat="server" Text='<%#Questionary.Person.FirstName %>' />
+        <asp:Label runat="server" ID="MiddleNameLabel" AssociatedControlID="MiddleNameTextBox"
+            Text="Отчество" Font-Bold="true" />
+        <asp:TextBox ID="MiddleNameTextBox" runat="server" Text='<%#Questionary.Person.MiddleName %>' />
+    </p>
+    <asp:Button ID="FillButton" runat="server" Text="Отправить" 
+        onclick="FillButtonClick" />
 </asp:Content>

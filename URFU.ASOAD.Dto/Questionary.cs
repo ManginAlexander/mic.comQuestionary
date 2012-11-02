@@ -9,6 +9,11 @@ namespace URFU.ASOAD.Dto
     [Serializable]
     public partial class Questionary
     {
+        public Questionary()
+        {
+            Person = new Person();
+        }
+
         /// <summary>
         /// Название курса
         /// </summary>

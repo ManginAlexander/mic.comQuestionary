@@ -56,6 +56,7 @@
     <Content Include="Account\ChangePasswordSuccess.aspx" />
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Register.aspx" />
+    <Content Include="QuestionaryList.aspx" />
     <Content Include="Scripts\jquery-1.7.2-vsdoc.js" />
     <Content Include="Scripts\jquery-1.7.2.js" />
     <Content Include="Scripts\jquery-1.7.2.min.js" />
@@ -106,6 +107,13 @@
     <Compile Include="Account\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
+    <Compile Include="QuestionaryList.aspx.cs">
+      <DependentUpon>QuestionaryList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="QuestionaryList.aspx.designer.cs">
+      <DependentUpon>QuestionaryList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -137,6 +145,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\URFU.ASOAD.Core\URFU.ASOAD.Core.csproj">
+      <Project>{53DB3F86-7AE5-4A3F-A58A-01BAE367E8B1}</Project>
+      <Name>URFU.ASOAD.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\URFU.ASOAD.Dto\URFU.ASOAD.Dto.csproj">
       <Project>{350F5688-680B-47DF-894E-CE46CE695C26}</Project>
       <Name>URFU.ASOAD.Dto</Name>

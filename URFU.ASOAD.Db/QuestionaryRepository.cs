@@ -20,6 +20,8 @@ namespace URFU.ASOAD.Db
         /// </summary>
         private const string REPOSITORY_FILE_NAME = "data.repository";
 
+        private static readonly string repositoryFileName = Path.Combine(SystemUtils.GetBaseDirectory(), REPOSITORY_FILE_NAME);
+
         private const string UNIQUE_ID_FORMAT = "{0} {1}";
 
         private static readonly Lazy<QuestionaryRepository> lazyInstance = new Lazy<QuestionaryRepository>(Create, LazyThreadSafetyMode.ExecutionAndPublication);
@@ -56,13 +58,12 @@ namespace URFU.ASOAD.Db
         /// <param name="questionary">анкета</param>
         public void Add(Questionary questionary)
         {
-            Init();
-            lock (this)
+            Synchronize(() =>
             {
                 questionary.Id = GetUniqueId(questionary.Person);
                 repository.Add(questionary.Id, questionary);
                 Save(ObjectUtils.Serialize(repository));
-            }
+            });
         }
 
         /// <summary>
@@ -71,8 +72,7 @@ namespace URFU.ASOAD.Db
         /// <param name="questionary">анкета</param>
         public void Change(Questionary questionary)
         {
-            Init();
-            lock (this)
+            Synchronize(() =>
             {
                 if (string.IsNullOrWhiteSpace(questionary.Id) || !repository.ContainsKey(questionary.Id))
                 {
@@ -89,6 +89,27 @@ namespace URFU.ASOAD.Db
                     repository[id] = questionary;
                 }
                 Save(ObjectUtils.Serialize(repository));
+            });
+        }
+
+        /// <summary>
+        /// Проверить наличие анкеты в репозитории
+        /// </summary>
+        /// <param name="questionary">анкета</param>
+        /// <returns>факт наличия анкеты в репозирории</returns>
+        public bool Contains(Questionary questionary)
+        {
+            bool result = false;
+            Synchronize(() => result = repository.ContainsKey(GetUniqueId(questionary.Person)));
+            return result;
+        }
+
+        private void Synchronize(Action synchroAction)
+        {
+            Init();
+            lock (this)
+            {
+                synchroAction();
             }
         }
 
@@ -99,7 +120,7 @@ namespace URFU.ASOAD.Db
         /// <returns>идентификатор</returns>
         private string GetUniqueId(Person person)
         {
-            return string.Format(UNIQUE_ID_FORMAT, person.FullName, person.Birthday.ToFormatString());
+            return person != null ? string.Format(UNIQUE_ID_FORMAT, person.FullName, person.Birthday.ToFormatString()) : string.Empty;
         }
 
         /// <summary>
@@ -110,14 +131,14 @@ namespace URFU.ASOAD.Db
         {
             try
             {
-                using (BinaryWriter writer = new BinaryWriter(File.Open(REPOSITORY_FILE_NAME, FileMode.Create)))
+                using (BinaryWriter writer = new BinaryWriter(File.Open(repositoryFileName, FileMode.Create)))
                 {
                     writer.Write(body);
                 }
             }
             catch (Exception exception)
             {
-                throw new RunTimeException(ErrorCode.CanNotSaveRepository, Path.GetFullPath(REPOSITORY_FILE_NAME), exception.Message);
+                throw new RunTimeException(ErrorCode.CanNotSaveRepository, repositoryFileName, exception.Message);
             }
         }
 
@@ -127,17 +148,17 @@ namespace URFU.ASOAD.Db
         /// <returns>бинарное представление репозитория</returns>
         protected virtual byte[] Read()
         {
-            if (!File.Exists(REPOSITORY_FILE_NAME))
+            if (!File.Exists(repositoryFileName))
             {
                 return null;
             }
             try
             {
-                return File.ReadAllBytes(REPOSITORY_FILE_NAME);
+                return File.ReadAllBytes(repositoryFileName);
             }
             catch (Exception exception)
             {
-                throw new RunTimeException(ErrorCode.CanNotLoadRepository, Path.GetFullPath(REPOSITORY_FILE_NAME), exception.Message);
+                throw new RunTimeException(ErrorCode.CanNotLoadRepository, repositoryFileName, exception.Message);
             }
         }
 
